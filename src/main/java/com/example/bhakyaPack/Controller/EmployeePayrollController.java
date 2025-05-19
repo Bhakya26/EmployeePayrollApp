@@ -1,7 +1,13 @@
 package com.example.bhakyaPack.Controller;
 
+
+
 import org.springframework.web.bind.annotation.*;
 import java.util.Map;
+import com.example.bhakyaPack.DTO.EmployeePayrollDTO;
+import com.example.bhakyaPack.Model.EmployeePayrollData;
+import jakarta.validation.Valid;
+
 
 @RestController
 @RequestMapping("/employeepayrollservice")
@@ -17,10 +23,17 @@ public class EmployeePayrollController {
         return "Get employee data for ID: " + id;
     }
 
+//    @PostMapping("/create")
+//    public String createEmployee(@RequestBody Map<String, Object> employeeData) {
+//        return "Created employee: " + employeeData;
+//    }
+    // updated 
+    
     @PostMapping("/create")
-    public String createEmployee(@RequestBody Map<String, Object> employeeData) {
-        return "Created employee: " + employeeData;
+    public EmployeePayrollData createEmployee(@Valid @RequestBody EmployeePayrollDTO empDTO) {
+        return new EmployeePayrollData(empDTO.getName(), empDTO.getSalary());
     }
+
 
     @PutMapping("/update")
     public String updateEmployee(@RequestBody Map<String, Object> employeeData) {
@@ -29,6 +42,6 @@ public class EmployeePayrollController {
 
     @DeleteMapping("/delete/{id}")
     public String deleteEmployee(@PathVariable("id") int id) {
-        return "Deleted employee with ID: " + id;
-    }
+        return "Deleted employee with ID: " + id;
+    }
 }
