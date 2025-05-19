@@ -1,47 +1,42 @@
 package com.example.bhakyaPack.Controller;
-
-
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import java.util.Map;
 import com.example.bhakyaPack.DTO.EmployeePayrollDTO;
 import com.example.bhakyaPack.Model.EmployeePayrollData;
-import jakarta.validation.Valid;
+import com.example.bhakyaPack.Service.EmployeePayrollService;
 
+import jakarta.validation.Valid;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/employeepayrollservice")
 public class EmployeePayrollController {
 
-    @GetMapping("/")
-    public String getAllEmployees() {
-        return "Get all employee payroll data";
-    }
+  @Autowired
+  private EmployeePayrollService payrollService;
 
-    @GetMapping("/get/{id}")
-    public String getEmployee(@PathVariable("id") int id) {
-        return "Get employee data for ID: " + id;
-    }
+  @GetMapping("/")
+  public String getAllEmployees() {
+      return payrollService.getAllEmployees();
+  }
 
-//    @PostMapping("/create")
-//    public String createEmployee(@RequestBody Map<String, Object> employeeData) {
-//        return "Created employee: " + employeeData;
-//    }
-    // updated 
-    
-    @PostMapping("/create")
-    public EmployeePayrollData createEmployee(@Valid @RequestBody EmployeePayrollDTO empDTO) {
-        return new EmployeePayrollData(empDTO.getName(), empDTO.getSalary());
-    }
+  @GetMapping("/get/{id}")
+  public String getEmployee(@PathVariable("id") int id) {
+      return payrollService.getEmployeeById(id);
+  }
 
+  @PostMapping("/create")
+  public EmployeePayrollData createEmployee(@Valid @RequestBody EmployeePayrollDTO empDTO) {
+      return payrollService.createEmployee(empDTO);
+  }
 
-    @PutMapping("/update")
-    public String updateEmployee(@RequestBody Map<String, Object> employeeData) {
-        return "Updated employee: " + employeeData;
-    }
+  @PutMapping("/update")
+  public String updateEmployee(@RequestBody Map<String, Object> employeeData) {
+      return payrollService.updateEmployee(employeeData);
+  }
 
-    @DeleteMapping("/delete/{id}")
-    public String deleteEmployee(@PathVariable("id") int id) {
-        return "Deleted employee with ID: " + id;
-    }
+  @DeleteMapping("/delete/{id}")
+  public String deleteEmployee(@PathVariable("id") int id) {
+      return payrollService.deleteEmployee(id);
+  }
 }
