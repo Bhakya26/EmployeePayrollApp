@@ -22,4 +22,9 @@ public class EmployeePayrollDTO {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	public long getSalary() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 }
