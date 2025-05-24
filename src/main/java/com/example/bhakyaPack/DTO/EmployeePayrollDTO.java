@@ -17,4 +17,9 @@ public class EmployeePayrollDTO {
 
     @Min(value = 500, message = "Salary should be more than 500")
     private long salary;
+
+	public String getName() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
