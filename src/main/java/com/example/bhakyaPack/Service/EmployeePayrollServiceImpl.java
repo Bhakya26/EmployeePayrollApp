@@ -2,7 +2,7 @@ package com.example.bhakyaPack.Service;
 import org.springframework.stereotype.Service;
 import com.example.bhakyaPack.DTO.EmployeePayrollDTO;
 import com.example.bhakyaPack.Model.EmployeePayrollData;
-
+import com.example.bhakyaPack.Exception.EmployeeNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +22,7 @@ public class EmployeePayrollServiceImpl implements EmployeePayrollService {
         return employeeList.stream()
                 .filter(emp -> emp.getId() == id)
                 .findFirst()
-                .orElse(null);
+                .orElseThrow(() -> new EmployeeNotFoundException("Employee with ID " + id + " not found"));
     }
 
     @Override
@@ -35,15 +35,14 @@ public class EmployeePayrollServiceImpl implements EmployeePayrollService {
     @Override
     public EmployeePayrollData updateEmployee(int id, EmployeePayrollDTO empDTO) {
         EmployeePayrollData employee = getEmployeeById(id);
-        if (employee != null) {
-            employee.setName(empDTO.getName());
-            employee.setSalary(empDTO.getSalary());
-        }
+        employee.setName(empDTO.getName());
+        employee.setSalary(empDTO.getSalary());
         return employee;
     }
 
     @Override
     public void deleteEmployee(int id) {
-        employeeList.removeIf(emp -> emp.getId() == id);
-    }
+    	 EmployeePayrollData employee = getEmployeeById(id);
+         employeeList.remove(employee);
+}
 }
