@@ -6,12 +6,12 @@ import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
+import jakarta.validation.constraints.Pattern;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class EmployeePayrollDTO {
-
+	@Pattern(regexp = "^[A-Z][a-zA-Z\\s]{2,}$", message = "Employee name is invalid")
     @NotNull(message = "Employee name cannot be null")
     private String name;
 
